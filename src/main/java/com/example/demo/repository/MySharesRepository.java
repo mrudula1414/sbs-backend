@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface MySharesRepository<MysharesModel> extends JpaRepository<MySharesModel, Integer> {
 	
-	
-	
+//	@Query(select * from my_shares where userid = email);
+//	List<MySharesModel> getUserShares(String email);
+	List<MySharesModel> findByUserId(String email);
 
 }

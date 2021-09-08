@@ -12,15 +12,15 @@ import javax.persistence.Table;
 
 public class WatchListModel {
 
-	
-	
-	public WatchListModel( int company_id, String name, String user_id, int open_rate, int close_rate,
-			int peak_rate, int least_rate, int current_rate, int year_low, int year_high,
+	public WatchListModel( int company_id, String name, String user_id, String watchlistname, int open_rate,
+			int close_rate, int peak_rate, int least_rate, int current_rate, int year_low, int year_high,
 			float market_cap, float p_e_ratio, int volume) {
 		super();
+		
 		this.company_id = company_id;
 		this.name = name;
 		this.user_id = user_id;
+		this.watchlistname = watchlistname;
 		this.open_rate = open_rate;
 		this.close_rate = close_rate;
 		this.peak_rate = peak_rate;
@@ -32,6 +32,7 @@ public class WatchListModel {
 		this.p_e_ratio = p_e_ratio;
 		this.volume = volume;
 	}
+
 	
 	public WatchListModel()
 	{
@@ -40,7 +41,7 @@ public class WatchListModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="sno",columnDefinition="Number(10) default '0'")
+	@Column(name="sno")
 	private int sno;
 
 	@Column(name="company_id")
@@ -51,6 +52,9 @@ public class WatchListModel {
 
 	@Column(name="user_id")
 	private String user_id;	
+	
+	@Column(name="watchlistname")
+    private String watchlistname;	
 	
 	@Column(name="open_rate")
 	private int open_rate;
@@ -129,7 +133,15 @@ public class WatchListModel {
 	public void setClose_rate(int close_rate) {
 		this.close_rate = close_rate;
 	}
+	
+	
+	public String getWatchlistname() {
+		return watchlistname;
+	}
 
+	public void setWatchlistname(String watchlistname) {
+		this.watchlistname = watchlistname;
+	}
 	public int getPeak_rate() {
 		return peak_rate;
 	}

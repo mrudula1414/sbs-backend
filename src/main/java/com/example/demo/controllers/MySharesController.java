@@ -59,28 +59,32 @@ public class MySharesController {
 	@GetMapping("/my-share")
 	public List<MySharesModel> myShare(@RequestParam("email") String email)
 	{
-		List<MySharesModel> allShares = (List<MySharesModel>)mySharesRepository.findAll();
-		List<MySharesModel> myShares = new ArrayList<MySharesModel>();
-		try 
-		{
-			Iterator<MySharesModel> iter = allShares.iterator();
-			while(iter.hasNext())
-			{
-				MySharesModel ms = (MySharesModel) iter.next();
-				if(email.equals(ms.getUser_id()))
-				{
-					System.out.print(ms);
-					myShares.add(ms);
-					
-				}
-			}
-		}
-		catch(Exception e)		
-		{	System.out.print("Exception : ");	
-			System.out.print(e.getMessage());
-		}
+		List<MySharesModel> allShares = (List<MySharesModel>)mySharesRepository.findByUserId(email);
+//		List<MySharesModel> myShares = new ArrayList<MySharesModel>();
+//		try 
+//		{
+//			Iterator<MySharesModel> iter = allShares.iterator();
+//			while(iter.hasNext())
+//			{
+//				MySharesModel ms = (MySharesModel) iter.next();
+//				if(email.equals(ms.getUser_id()))
+//				{
+//					System.out.print(ms);
+//					myShares.add(ms);
+//					
+//				}
+//			}
+//		}
+//		catch(Exception e)	
 		
-		return myShares;
+//		{
+		
+		
+		System.out.print("Exception : ");	
+//			System.out.print(e.getMessage());
+//		}
+		
+		return allShares;
 	}
 	@PostMapping("/buy")
 	public Map<String, String> buy(@RequestBody Map<String, Object> payload) 
@@ -157,6 +161,7 @@ public class MySharesController {
 				u1.setTime(getDateAndTime());
 				u1.setUserid(email);
 				u1.setAction("buy stock");
+				u1.setAmount(company.get(0).getCurrent_rate()*qty);
 				userActivityRepository.save(u1);
 				
 				
@@ -177,11 +182,12 @@ public class MySharesController {
 				int volume=company.get(0).getVolume()-qty;
 				company.get(0).setVolume(volume);
 				companyRepository.save(company.get(0));
-				u1.setItem("Stocks");
-				u1.setRemarks("bought "+company.get(0).getName());
-				u1.setTime(getDateAndTime());
-				u1.setUserid(email);
-				userActivityRepository.save(u1);
+//				u1.setItem("Stocks");
+//				u1.setRemarks("bought "+company.get(0).getName());
+//				u1.setTime(getDateAndTime());
+//				u1.setAmount(company.get(0).getCurrent_rate()*qty);
+//				u1.setUserid(email);
+//				userActivityRepository.save(u1);
 			}
 		}
 		catch(Exception e)		
@@ -193,6 +199,117 @@ public class MySharesController {
 		map.put("status", "success");
 		return map;
 	}
+//	@PostMapping("/buy")
+//	public Map<String, String> buy(@RequestBody Map<String, Object> payload) 
+//	{
+//		String email = (String) payload.get("email");
+//		int companyId = Integer.parseInt(payload.get("companyId").toString());
+//		int qty = Integer.parseInt(payload.get("quantity").toString());
+//		HashMap<String, String> map = new HashMap<>();
+//
+//		List<UserModel> users = (List<UserModel>) userRepository.findAll();
+//		List<UserModel> user = new ArrayList<UserModel>();
+//		
+//		List<MySharesModel> allShares = (List<MySharesModel>)mySharesRepository.findAll();
+//		List<MySharesModel> myShares = new ArrayList<MySharesModel>();
+//		
+//		List<Company> allCompany = (List<Company>)companyRepository.findAll();
+//		List<Company> company = new ArrayList<Company>();
+//		
+//		UserActivity u1=new UserActivity();
+//				
+//		try
+//		{
+//			Iterator<UserModel> iter = users.iterator();
+//			while(iter.hasNext())
+//			{
+//				UserModel us = (UserModel) iter.next();
+//				if(email.equals(us.getEmail()))
+//					user.add(us);				
+//			}
+//			
+//			Iterator<MySharesModel> iter2 = allShares.iterator();
+//			while(iter2.hasNext())
+//			{
+//				MySharesModel ms = (MySharesModel) iter2.next();
+//				if(email.equals(ms.getUser_id()))				
+//				{					
+//					if(ms.getCompany_id() == companyId)
+//						myShares.add(ms);
+//				}
+//			}
+//			
+//			Iterator<Company> iter3 = allCompany.iterator();
+//			while(iter3.hasNext())
+//			{
+//				Company cm = (Company) iter3.next();
+//				if(companyId == cm.getCompany_id())				
+//					company.add(cm);					
+//			}
+//			
+//			if(user.get(0).getAmount_left()<=(qty*company.get(0).getCurrent_rate()))
+//			{
+//				map.put("status", "insufficient balance");
+//				return map;
+//			}			
+//			else if(!myShares.isEmpty())
+//			{
+//				int userAmount = user.get(0).getAmount_left();
+//				int currentAmount = userAmount - qty*company.get(0).getCurrent_rate();
+//				
+//				int userQty = myShares.get(0).getQuantity();
+//				int currentQty = userQty + qty;
+//				int volume=company.get(0).getVolume()-qty;
+//				company.get(0).setVolume(volume);
+//				companyRepository.save(company.get(0));
+//				myShares.get(0).setQuantity(currentQty);
+//				myShares.get(0).setBought_rate(company.get(0).getCurrent_rate());
+//				mySharesRepository.save(myShares.get(0));
+//				user.get(0).setAmount_left(currentAmount);
+//				userRepository.save(user.get(0));
+//				
+//				
+//				u1.setItem("Stocks");
+//				u1.setRemarks("bought "+ qty +" stocks of " + company.get(0).getName()+" at price "+company.get(0).getCurrent_rate());
+//				u1.setTime(getDateAndTime());
+//				u1.setUserid(email);
+//				u1.setAction("buy stock");
+//				userActivityRepository.save(u1);
+//				
+//				
+//				
+//				map.put("status", "success");
+//				return map;
+//			}
+//			else
+//			{
+//				int userAmount = user.get(0).getAmount_left();
+//				int currentAmount = userAmount - qty*company.get(0).getCurrent_rate();
+//				
+//				user.get(0).setAmount_left(currentAmount);
+//				userRepository.save(user.get(0));
+//				
+//				MySharesModel msm = new MySharesModel(companyId,company.get(0).getName(),email,company.get(0).getOpen_rate(),company.get(0).getClose_rate(),company.get(0).getPeak_rate(),company.get(0).getLeast_rate(),company.get(0).getCurrent_rate(),qty,company.get(0).getCurrent_rate(),company.get(0).getYear_low(),company.get(0).getYear_high(), company.get(0).getMarket_cap(),company.get(0).getP_e_ratio(),company.get(0).getVolume());
+//				mySharesRepository.save(msm);
+//				int volume=company.get(0).getVolume()-qty;
+//				company.get(0).setVolume(volume);
+//				companyRepository.save(company.get(0));
+//				u1.setItem("Stocks");
+//				u1.setRemarks("bought "+company.get(0).getName());
+//				u1.setTime(getDateAndTime());
+//				u1.setUserid(email);
+//				userActivityRepository.save(u1);
+//			}
+//		}
+//		catch(Exception e)		
+//		{	
+//			map.put("status", e.getMessage());
+//			return map;
+//		}
+//
+//		map.put("status", "success");
+//		return map;
+//	}
 	@PostMapping("/sell")
 	public Map<String, String> sell(@RequestBody Map<String, Object> payload)
 	{
@@ -266,6 +383,7 @@ public class MySharesController {
 			u1.setRemarks("sold "+ qty +" stocks of " + company.get(0).getName()+" at price "+company.get(0).getCurrent_rate());
 			u1.setTime(getDateAndTime());
 			u1.setUserid(email);
+			u1.setAmount(company.get(0).getCurrent_rate()*qty);
 			u1.setAction("sell stock");
 			userActivityRepository.save(u1);
 	

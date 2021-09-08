@@ -22,8 +22,7 @@ public class UserModel {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name="money")
-	private String money;
+	
 	@Id
 	@Column(name = "email")
 	private String email;

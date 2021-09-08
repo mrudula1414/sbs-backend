@@ -146,10 +146,11 @@ public class UserController {
 			UserActivity u1=new UserActivity();
 			
 			u1.setItem("Funds");
-			u1.setRemarks(" You added "+funds+"to your account");
+			u1.setRemarks(" You added "+funds+" to your account");
 			u1.setTime(getDateAndTime());
 			u1.setUserid(email);
 			u1.setAction("Credit");
+			//u1.setAmount(funds);
 			userActivityRepository.save(u1);
 			map.put("status", "success");
 			return map;
@@ -163,29 +164,30 @@ public class UserController {
 	}	
 	@GetMapping("/myactivity")
 	public List<UserActivity> myShare(@RequestParam("email") String email)
-	{
-		List<UserActivity> allActivities = (List<UserActivity>)userActivityRepository.findAll();
-		List<UserActivity> myActivity = new ArrayList<UserActivity>();
-		try 
-		{
-			Iterator<UserActivity> iter = allActivities.iterator();
-			while(iter.hasNext())
-			{
-				UserActivity ms = (UserActivity) iter.next();
-				if(email.equals(ms.getUserid()))
-				{
-					System.out.print(ms);
-					myActivity.add(ms);
-					
-				}
-			}
-		}
-		catch(Exception e)		
-		{	System.out.print("Exception : ");	
-			System.out.print(e.getMessage());
-		}
-		
-		return myActivity;
+	{   List<UserActivity> allActivities = (List<UserActivity>)userActivityRepository.findByUserid(email);
+//		List<UserActivity> allActivities = (List<UserActivity>)userActivityRepository.findAll();
+//		List<UserActivity> myActivity = new ArrayList<UserActivity>();
+//		try 
+//		{
+//			Iterator<UserActivity> iter = allActivities.iterator();
+//			while(iter.hasNext())
+//			{
+//				UserActivity ms = (UserActivity) iter.next();
+//				if(email.equals(ms.getUserid()))
+//				{
+//					System.out.print(ms);
+//					myActivity.add(ms);
+//					
+//				}
+//			}
+//		}
+//		catch(Exception e)		
+//		{	System.out.print("Exception : ");	
+//			System.out.print(e.getMessage());
+//		}
+//		
+//		return myActivity;
+	return allActivities;
 	}
 	
 	

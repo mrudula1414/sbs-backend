@@ -25,7 +25,7 @@ public class MySharesModel {
 	private String name;	
 
 	@Column(name="user_id")
-	private String user_id;	
+	private String userId;	
 	
 	@Column(name="open_rate")
 	private Integer open_rate;
@@ -88,11 +88,11 @@ public class MySharesModel {
 	}
 
 	public String getUser_id() {
-		return user_id;
+		return userId;
 	}
 
 	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+		this.userId = user_id;
 	}
 
 	public int getOpen_rate() {
@@ -197,7 +197,7 @@ public class MySharesModel {
 		super();
 		this.company_id = company_id;
 		this.name = name;
-		this.user_id = user_id;
+		this.userId = user_id;
 		this.open_rate = open_rate;
 		this.close_rate = close_rate;
 		this.peak_rate = peak_rate;

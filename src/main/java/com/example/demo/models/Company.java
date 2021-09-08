@@ -50,7 +50,7 @@ public class Company {
 	private int volume;
 
 	public Company(String name, int open_rate, int close_rate, int peak_rate, int least_rate, int current_rate,
-			int company_id, int year_low, int year_high, float market_cap, float p_e_ratio, int volume) {
+			 int year_low, int year_high, float market_cap, float p_e_ratio, int volume) {
 		super();
 		this.name = name;
 		this.open_rate = open_rate;
@@ -58,7 +58,7 @@ public class Company {
 		this.peak_rate = peak_rate;
 		this.least_rate = least_rate;
 		this.current_rate = current_rate;
-		this.company_id = company_id;
+		//this.company_id = company_id;
 		this.year_low = year_low;
 		this.year_high = year_high;
 		this.market_cap = market_cap;

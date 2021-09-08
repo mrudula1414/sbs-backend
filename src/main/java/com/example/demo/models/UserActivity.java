@@ -22,19 +22,19 @@ public class UserActivity {
 	private String action;
 	private String remarks;
 	private String item;
-	private int stockid;
+	private int amount;
 	public UserActivity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public UserActivity(String userid, LocalDateTime time, String action, String item, int stockid,String remarks) {
+	public UserActivity(String userid, LocalDateTime time, String action, String item, int amount,String remarks) {
 		super();
 		
 		this.userid = userid;
 		this.time = time;
 		this.action = action;
 		this.item = item;
-		this.stockid = stockid;
+		this.amount = amount;
 		this.remarks=remarks;
 	}
 	
@@ -74,10 +74,11 @@ public class UserActivity {
 	public void setItem(String item) {
 		this.item = item;
 	}
-	public int getStockid() {
-		return stockid;
+	public int getAmount() {
+		return amount;
 	}
-	public void setStockid(int stockid) {
-		this.stockid = stockid;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
+	
 }
